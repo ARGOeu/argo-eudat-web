@@ -609,6 +609,7 @@
             <processor match="/e:entries" type="InsertProcessor" disabled="$month!=0">
                 <parameter name="nodes"
                   eval="new_attribute('month4',substring(date:add(date:date-time(),'P1D'),0,8))
+                       |new_attribute('month5',substring(date:add(date:date-time(),'P1M'),0,8))
                        |new_attribute('month3',substring(date:add(date:date-time(),'-P1M'),0,8))
                        |new_attribute('month2',substring(date:add(date:date-time(),'-P2M'),0,8))
                        |new_attribute('month1',substring(date:add(date:date-time(),'-P3M'),0,8))"/>
