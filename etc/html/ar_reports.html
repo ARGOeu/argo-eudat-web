@@ -356,7 +356,7 @@
                     </td>
 
                     <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month4]">
-                        <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=DAILY&amp;start_date={{/e:entries/@month4}}-01&amp;end_date={{/e:entries/@month5}}-01&amp;site={{@site}}">
+                        <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=daily&amp;start_date={{/e:entries/@month4}}-01&amp;end_date={{/e:entries/@month5}}-01&amp;site={{@site}}">
                             <span class="avCheck label"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@availability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@availability,'#.00')}}</span>
                             <span class="reCheck label" style="margin-left:10px"
