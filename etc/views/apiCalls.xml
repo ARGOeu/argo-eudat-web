@@ -117,7 +117,7 @@
 
         <argument name="group_type">servicegroups</argument>
         <argument name="report">Critical</argument>
-        <argument name="granularity">DAILY</argument>
+        <argument name="granularity">daily</argument>
         <argument name="start_time">0</argument>
         <argument name="end_time">0</argument>
         <argument name="site">false</argument>
@@ -217,7 +217,7 @@
 
         <argument name="group_type">SERVICEGROUPS</argument>
         <argument name="report">Critical</argument>
-        <argument name="granularity">DAILY</argument>
+        <argument name="granularity">daily</argument>
         <argument name="site">false</argument>
         <argument name="delete" eval="false()"></argument>
 
