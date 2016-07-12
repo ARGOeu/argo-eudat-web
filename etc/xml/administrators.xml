@@ -35,5 +35,10 @@
         <DN>/C=GR/O=HellasGrid/OU=auth.gr/CN=Pavlos Daoglou</DN>
         <CertDN>CN=Pavlos Daoglou, OU=auth.gr, O=HellasGrid , C=GR</CertDN>
     </admin>
-
+     <admin>
+        <FamilyName>Zamani</FamilyName>
+        <FirstName>Themis</FirstName>
+        <DN>/C=GR/O=HellasGrid/OU=grnet.gr/CN=Themis Zamani</DN>
+        <CertDN>CN=Themis Zamani, OU=grnet.gr, O=HellasGrid, C=GR</CertDN>
+    </admin>
 </admins>
