@@ -7,26 +7,32 @@
 
 
 
-    <view name="ngi_reports_cached">
-    <info>
-        <category>AR reports</category>
-        <description>NGI League Reports - cache Rotated</description>
-    </info>
-        <argument name="delete" eval="false()"></argument>
 
-    <connector type="XMLConnector">
-        <parameter name="content" eval="new_element('root')"></parameter>
-    </connector>
+
+    <view name="ngi_reports_cached">
+        <info>
+            <category>AR reports</category>
+            <description>NGI League Reports - cache Rotated</description>
+        </info>
+        <argument name="report">Critical</argument>
+
+
+        <argument name="start_time" eval="concat(substring(date:add(date:date-time(),concat('-P',3,'M')), 0,8),'-01T00:00:00Z')"></argument>
+        <argument name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"></argument>
+
+
+        <connector type="XMLConnector">
+            <parameter name="content" eval="new_element('root')"></parameter>
+        </connector>
 
         <processors>
-            <insert match="/root" nodes="
-            view('api.availability.rotating.caches',entry('group_type','project')|entry('granularity','MONTHLY')|entry('diff','0')|entry('delete',$delete))
-            |view('api.availability.rotating.caches',entry('group_type','project')|entry('granularity','MONTHLY')|entry('diff','1')|entry('delete',$delete))
-            |view('api.availability.rotating.caches',entry('group_type','project')|entry('granularity','MONTHLY')|entry('diff','2')|entry('delete',$delete))">
 
-            </insert>
+
+            <element in="root">
+                <element-create>view('api.availability.file.cache',entry('group_type','project')|entry('granularity','MONTHLY')|entry('start_time',$start_time)|entry('end_time',$end_time)|entry('report',$report))</element-create>
+            </element>
+
         </processors>
-
     </view>
 
     <view name="ngi_reports_daily_cached">
@@ -34,23 +40,31 @@
             <category>AR reports</category>
             <description>NGI League Reports - cache Rotated</description>
         </info>
-        <argument name="delete" eval="false()"></argument>
+        <argument name="mode">RW</argument>
+        <argument name="report">Critical</argument>
+
+        <argument name="start_time" eval="concat(substring(date:add(date:date-time(),concat('-P',3,'M')), 0,8),'-01T00:00:00Z')"></argument>
+        <argument name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"></argument>
+
 
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"></parameter>
         </connector>
 
         <processors>
-            <insert match="/root" nodes="
-            view('api.availability.rotating.caches',entry('group_type','project')|entry('granularity','DAILY')|entry('diff','0')|entry('delete',$delete))
-            |view('api.availability.rotating.caches',entry('group_type','project')|entry('granularity','DAILY')|entry('diff','1')|entry('delete',$delete))
-            |view('api.availability.rotating.caches',entry('group_type','project')|entry('granularity','DAILY')|entry('diff','2')|entry('delete',$delete))">
 
-            </insert>
+
+
+
+            <element in="root">
+                <element-create>view('api.availability.file.cache',entry('group_type','project')|entry('granularity','DAILY')|entry('start_time',$start_time)|entry('end_time',$end_time)|entry('report',$report))</element-create>
+            </element>
+
+
+
         </processors>
 
     </view>
-
 
 
     <view name="ngi_reports_date">
@@ -131,15 +145,14 @@
 
 
 
-          
+
             <processor match="/e:entries" type="InsertProcessor" disabled="$month!=0">
-                <parameter name="nodes" eval="new_attribute('month4',substring(date:add(date:date-time(),'-P1D'),  0,8))|new_attribute('month3',substring(date:add(date:date-time(),'-P1M'),  0,8))|new_attribute('month2',substring(date:add(date:date-time(),'-P2M'),  0,8))|new_attribute('month1',substring(date:add(date:date-time(),'-P3M'),  0,8))"/>
+                <parameter name="nodes" eval="new_attribute('month3',substring(date:add(date:date-time(),'-PT1H'),  0,8))|new_attribute('month2',substring(date:add(date:date-time(),'-P1M'),  0,8))|new_attribute('month1',substring(date:add(date:date-time(),'-P2M'),  0,8))|new_attribute('month4',substring(date:date-time(),  0,11))"/>
             </processor>
 
             <processor match="/e:entries" type="InsertProcessor" disabled="$month=0">
                 <parameter name="nodes" eval="new_attribute('month3',$month)|new_attribute('month4',substring(date:add(concat($month,'-01T00:00:00'),'P1M'),  0,8))|new_attribute('month2',substring(date:add(concat($month,'-01T00:00:00'),'-P1M'),  0,8))|new_attribute('month1',substring(date:add(concat($month,'-01T00:00:00'),'-P2M'),  0,8))"/>
             </processor>
-            
             
             
             <insert match="/e:entries"  nodes="new_attribute('description','NGI League Report')"></insert>
@@ -455,25 +468,29 @@
 
     </view>
 
+
+
     <view name="site_reports_cached">
         <info>
             <category>AR reports</category>
             <description>NGI League Reports - cache Rotated</description>
         </info>
         <argument name="report">Critical</argument>
-        <argument name="delete" eval="false()"></argument>
+        <argument name="mode">RW</argument>
+
+        <argument name="start_time" eval="concat(substring(date:add(date:date-time(),concat('-P',3,'M')), 0,8),'-01T00:00:00Z')"></argument>
+        <argument name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"></argument>
 
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"></parameter>
         </connector>
 
         <processors>
-            <insert match="/root" nodes="
-            view('api.availability.rotating.caches',entry('group_type','servicegroups')|entry('granularity','MONTHLY')|entry('report',$report)|entry('diff','0')|entry('delete',$delete))
-            |view('api.availability.rotating.caches',entry('group_type','servicegroups')|entry('granularity','MONTHLY')|entry('report',$report)|entry('diff','1')|entry('delete',$delete))
-            |view('api.availability.rotating.caches',entry('group_type','servicegroups')|entry('granularity','MONTHLY')|entry('report',$report)|entry('diff','2')|entry('delete',$delete))">
 
-            </insert>
+            <element in="root">
+                <element-create>view('api.availability.file.cache',entry('group_type','servicegroups')|entry('granularity','MONTHLY')|entry('start_time',$start_time)|entry('end_time',$end_time)|entry('report',$report))</element-create>
+            </element>
+
         </processors>
 
     </view>
@@ -524,19 +541,22 @@
             <description>NGI League Reports - cache Rotated</description>
         </info>
         <argument name="report">Critical</argument>
-        <argument name="delete" eval="false()"></argument>
+        <argument name="mode">RW</argument>
+
+        <argument name="start_time" eval="concat(substring(date:add(date:date-time(),concat('-P',3,'M')), 0,8),'-01T00:00:00Z')"></argument>
+        <argument name="end_time" eval="concat(str:replace(substring(date:date-time(),0,20),' ','T'),'Z')"></argument>
+
 
         <connector type="XMLConnector">
             <parameter name="content" eval="new_element('root')"></parameter>
         </connector>
 
         <processors>
-            <insert match="/root" nodes="
-            view('api.availability.rotating.caches',entry('group_type','servicegroups')|entry('granularity','DAILY')|entry('report',$report)|entry('diff','0')|entry('delete',$delete))
-            |view('api.availability.rotating.caches',entry('group_type','servicegroups')|entry('granularity','DAILY')|entry('report',$report)|entry('diff','1')|entry('delete',$delete))
-            |view('api.availability.rotating.caches',entry('group_type','servicegroups')|entry('granularity','DAILY')|entry('report',$report)|entry('diff','2')|entry('delete',$delete))">
 
-            </insert>
+            <element in="root">
+                <element-create>view('api.availability.file.cache',entry('group_type','servicegroups')|entry('granularity','DAILY')|entry('start_time',$start_time)|entry('end_time',$end_time)|entry('report',$report))</element-create>
+            </element>
+
         </processors>
 
     </view>
@@ -605,22 +625,23 @@
 
 
 
-
             <processor match="/e:entries" type="InsertProcessor" disabled="$month!=0">
-                <parameter name="nodes"
-                  eval="new_attribute('month4',substring(date:add(date:date-time(),'P1D'),0,8))
-                       |new_attribute('month3',substring(date:add(date:date-time(),'-P1M'),0,8))
-                       |new_attribute('month2',substring(date:add(date:date-time(),'-P2M'),0,8))
-                       |new_attribute('month1',substring(date:add(date:date-time(),'-P3M'),0,8))"/>
+                <parameter name="nodes" eval="
+                new_attribute('month3',substring(date:add(date:date-time(),'-PT1H'),  0,8))
+                |new_attribute('month2',substring(date:add(date:date-time(),'-P1M'),  0,8))
+                |new_attribute('month1',substring(date:add(date:date-time(),'-P2M'),  0,8))
+                |new_attribute('month4',substring(date:date-time(),  0,11))"/>
             </processor>
 
             <processor match="/e:entries" type="InsertProcessor" disabled="$month=0">
-                <parameter name="nodes"
-                  eval="new_attribute('month3',$month)
-                   |new_attribute('month4',substring(date:add(concat($month,'-01T00:00:00'), 'P1M'),0,8))
-                   |new_attribute('month2',substring(date:add(concat($month,'-01T00:00:00'),'-P1M'),0,8))
-                   |new_attribute('month1',substring(date:add(concat($month,'-01T00:00:00'),'-P2M'),0,8))"/>
+                <parameter name="nodes" eval="new_attribute('month3',$month)
+                |new_attribute('month4',substring(date:add(concat($month,'-01T00:00:00'),'P1M'),  0,8))
+                |new_attribute('month2',substring(date:add(concat($month,'-01T00:00:00'),'-P1M'),  0,8))
+                |new_attribute('month1',substring(date:add(concat($month,'-01T00:00:00'),'-P2M'),  0,8))"/>
             </processor>
+
+
+
 
             <insert match="/e:entries"  nodes="new_attribute('description','Service Groups Report')"></insert>
             <insert match="/e:entries"  nodes="new_attribute('view','site_reports')"></insert>
