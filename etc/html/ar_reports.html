@@ -24,7 +24,7 @@
     <h1>
         Availabilities Reliabilities Reports
         <small tpl:if="e:entries/@view!='cloud_reports'">EUDAT Community Projects Report</small>
-        <small tpl:else="">EGI Federated Cloud Report</small>
+        <small tpl:else="">Eudat Federated Cloud Report</small>
         <button type="button" class="pull-right btn btn-primary" data-toggle="modal" data-target="#myHelp">
             <div class="fa fa-info"></div>
         </button>
@@ -98,100 +98,109 @@
     </div>
 </div>
 
-<!-- case NGI-->
+    <!-- case NGI-->
 
 
-<div tpl:if="/e:entries/e:entry/Ngi">
-    <div class="box box-primary" id="table">
-        <div class="box-header">
-            <h3 class="box-title">Availabilities Reliabilities Table
+    <div tpl:if="/e:entries/e:entry/Ngi">
+        <div class="box box-primary" id="table">
+            <div class="box-header">
+                <h3 class="box-title">Availabilities Reliabilities Table
 
-            </h3>
-
-
-        </div>
-        <div class="box-body table-responsive">
-            <table id="dataTable" class="table table-bordered table-hover table-striped">
-
-                <thead>
-                <tr>
-                    <th>Operations Center</th>
+                </h3>
 
 
-                    <th>
-                        {{/e:entries/@month1}}
-                    </th>
-                    <th>
-                        {{/e:entries/@month2}}
-                    </th>
-                    <th>
-                        {{/e:entries/@month3}}
-                    </th>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="dataTable" class="table table-bordered table-hover table-striped">
 
-                </tr>
-                </thead>
+                    <thead>
+                    <tr>
+                        <th>Operations Center</th>
 
 
-                <tbody>
-                <tr tpl:foreach="/e:entries/e:entry/Ngi[@NGI!='EGI']">
+                        <th>
+                            {{/e:entries/@month1}}
+                        </th>
+                        <th>
+                            {{/e:entries/@month2}}
+                        </th>
+                        <th>
+                            {{/e:entries/@month3}}
+                        </th>
+
+                    </tr>
+                    </thead>
 
 
-                    <td tpl:if="/e:entries/@details" class="ngi"><a
-                            href="/lavoisier/{{/e:entries/@details}}?ngi={{@NGI}}">{{@NGI}}</a></td>
-                    <td tpl:else="">{{@NGI}}</td>
+                    <tbody>
+                    <tr tpl:foreach="/e:entries/e:entry/Ngi[@NGI!='EGI']">
 
 
-                    <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month1]">
-                        <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=daily&amp;start_date={{/e:entries/@month1}}-01&amp;end_date={{/e:entries/@month2}}-01&amp;ngi={{@NGI}}">
+                        <td tpl:if="/e:entries/@details" class="ngi"><a
+                                href="/lavoisier/{{/e:entries/@details}}?ngi={{@NGI}}&amp;report={{/e:entries/@report}}">{{@NGI}}</a></td>
+                        <td tpl:else="">{{@NGI}}</td>
+
+
+                        <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month1]">
+                            <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=DAILY&amp;report={{/e:entries/@report}}&amp;start_date={{/e:entries/@month1}}-01&amp;end_date={{/e:entries/@month2}}-01&amp;ngi={{@NGI}}">
                             <span class="avCheck label"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@availability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@availability,'#.00')}}</span>
                             <span style="margin-left:10px" class="reCheck label"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@reliability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@reliability,'#.00')}}</span>
 
-                        </a>
+                            </a>
 
 
-                    </td>
-                    <td tpl:else="">
-                        <span class="avCheck label label-default">N.A</span>
-                        <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
+                        </td>
+                        <td tpl:else="">
+                            <span class="avCheck label label-default">N.A</span>
+                            <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
 
-                    </td>
+                        </td>
 
 
-                    <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month2]">
-                        <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=daily&amp;start_date={{/e:entries/@month2}}-01&amp;end_date={{/e:entries/@month3}}-01&amp;ngi={{@NGI}}">
+                        <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month2]">
+                            <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=DAILY&amp;report={{/e:entries/@report}}&amp;start_date={{/e:entries/@month2}}-01&amp;end_date={{/e:entries/@month3}}-01&amp;ngi={{@NGI}}">
                             <span class="label avCheck"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@availability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@availability,'#.00')}}</span>
                             <span style="margin-left:10px" class="label reCheck"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@reliability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@reliability,'#.00')}}</span>
-                        </a>
-                    </td>
-                    <td tpl:else="">
-                        <span class="avCheck label label-default">N.A</span>
-                        <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
+                            </a>
+                        </td>
+                        <td tpl:else="">
+                            <span class="avCheck label label-default">N.A</span>
+                            <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
 
-                    </td>
+                        </td>
 
-                    <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month3]">
-                        <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=daily&amp;start_date={{/e:entries/@month3}}-01&amp;end_date={{/e:entries/@month4}}-01&amp;ngi={{@NGI}}">
+                        <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month3]">
+                            <a tpl:if="string-length(/e:entries/@month4)&gt;8" href="/lavoisier/{{/e:entries/@related_view}}?granularity=DAILY&amp;report={{/e:entries/@report}}&amp;start_date={{/e:entries/@month3}}-01&amp;end_date={{/e:entries/@month4}}&amp;ngi={{@NGI}}">
                             <span class="avCheck label"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@availability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@availability,'#.00')}}</span>
                             <span style="margin-left:10px" class="reCheck label"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@reliability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@reliability,'#.00')}}</span>
-                        </a>
-                    </td>
-                    <td tpl:else="">
-                        <span class="avCheck label label-default">N.A</span>
-                        <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
+                            </a>
 
-                    </td>
-                </tr>
-                </tbody>
-                
-                <tfoot tpl:foreach="/e:entries/e:entry/Ngi[@NGI='EGI']">
+                            <a tpl:else="" href="/lavoisier/{{/e:entries/@related_view}}?granularity=DAILY&amp;report={{/e:entries/@report}}&amp;start_date={{/e:entries/@month3}}-01&amp;end_date={{concat(/e:entries/@month4,'-01')}}&amp;ngi={{@NGI}}">
+                            <span class="avCheck label"
+                                  title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@availability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@availability,'#.00')}}</span>
+                            <span style="margin-left:10px" class="reCheck label"
+                                  title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@reliability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@reliability,'#.00')}}</span>
+                            </a>
+
+
+                        </td>
+                        <td tpl:else="">
+                            <span class="avCheck label label-default">N.A</span>
+                            <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
+
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    <tfoot tpl:foreach="/e:entries/e:entry/Ngi[@NGI='EGI']">
                     <tr>
-                        <th>EGI - Average Values</th>
+                        <th>Average Values</th>
                         <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month1]">
 
                                 <span class="avCheck label"
@@ -200,10 +209,10 @@
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@reliability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@reliability,'#.00')}}</span>
 
 
-                          </td>
-                         <th tpl:else="">
-                        <span class="avCheck label label-default">N.A</span>
-                        <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
+                        </td>
+                        <th tpl:else="">
+                            <span class="avCheck label label-default">N.A</span>
+                            <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
 
                         </th>
 
@@ -235,174 +244,174 @@
 
                         </th>
                     </tr>
-                </tfoot>
-            </table>
+                    </tfoot>
+                </table>
 
+            </div>
         </div>
+
     </div>
 
-</div>
-
-<div tpl:else="">
-    <div class="box box-primary"
-         tpl:foreach="/e:entries/e:entry[@key=parent::e:entries/@ngi or parent::e:entries/@ngi='all']">
+    <div tpl:else="">
+        <div class="box box-primary"
+             tpl:foreach="/e:entries/e:entry[@key=parent::e:entries/@ngi or parent::e:entries/@ngi='all']">
 
 
-        <a name="{{@key}}"> </a>
+            <a name="{{@key}}"> </a>
 
-        <div class="box-header">
-                <h3 class="box-title">
-                    <!-- <a href="/lavoisier/ngi_reports">EGI </a> &gt; -->
-                    {{@key}}
-                </h3>
+            <div class="box-header">
 
-        </div>
-        <div class="box-body table-responsive">
 
-<!--
-                <a href="/lavoisier/render_chart_n?view={{/e:entries/@view}}&amp;type=availability&amp;ngi={{@key}}&amp;accept=html"
+            </div>
+            <div class="box-body table-responsive">
+
+                <a href="/lavoisier/render_chart_n?view={{/e:entries/@view}}&amp;report={{/e:entries/@report}}&amp;type=availability&amp;ngi={{@key}}&amp;accept=html"
                    title="Chart">
                     <span style="margin:15px" class="btn btn-primary"><i
                             class="fa fa-bar-chart-o"> </i> AVAILABILITY</span>
                 </a>
-                <a href="/lavoisier/render_chart_n?view={{/e:entries/@view}}&amp;type=reliability&amp;ngi={{@key}}&amp;accept=html"
+                <a href="/lavoisier/render_chart_n?view={{/e:entries/@view}}&amp;report={{/e:entries/@report}}&amp;type=reliability&amp;ngi={{@key}}&amp;accept=html"
                    title="Chart">
                     <span style="margin:15px" class="btn btn-primary"><i
                             class="fa fa-bar-chart-o"> </i>  RELIABILITY</span>
                 </a>
--->
-            <table class="table table-bordered table-hover table-striped">
-                <thead>
-                <tr>
-                    <th class="col-md-4">Community Project</th>
 
-                    <th>
-                        {{/e:entries/@month2}}
-                    </th>
-                    <th>
-                        {{/e:entries/@month3}}
-                    </th>
-                    <th>
-                        {{/e:entries/@month4}}
-                    </th>
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th class="col-md-4">Site</th>
 
-                </tr>
-                </thead>
+                        <th>
+                            {{/e:entries/@month1}}
+                        </th>
+                        <th>
+                            {{/e:entries/@month2}}
+                        </th>
+                        <th>
+                            {{/e:entries/@month3}}
+                        </th>
 
-
-                <tbody>
-                <tr tpl:foreach="Site">
-                    <td class="col-md-4">{{@site}}</td>
+                    </tr>
+                    </thead>
 
 
-                    <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month2]">
-                        <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=daily&amp;start_date={{/e:entries/@month2}}-01&amp;end_date={{/e:entries/@month3}}-01&amp;site={{@site}}">
+                    <tbody>
+                    <tr tpl:foreach="Site">
+                        <td class="col-md-4">{{@site}}</td>
+
+                        <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month1]">
+                            <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=DAILY&amp;report={{/e:entries/@report}}&amp;start_date={{/e:entries/@month1}}-01&amp;end_date={{/e:entries/@month2}}-01&amp;site={{@site}}">
+                            <span class="avCheck label"
+                                  title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@availability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@availability,'#.00')}}</span>
+                            <span class="reCheck label" style="margin-left:10px"
+                                  title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@reliability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@reliability,'#.00')}}</span>
+                            </a>
+                        <span  class="pull-right" style="font-size: small;" >
+                            <span  tpl:if="format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@downtime*100,'#.00') &gt; 10" class="minilabel label label-warning" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@downtime*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@downtime*100,'#.00')}}
+                            </span>
+                              <span  tpl:else="" class="minilabel label label-success" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@downtime*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@downtime*100,'#.00')}}
+                            </span>
+                           <br/>
+                             <span  tpl:if="format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@unknown*100,'#.00') &gt; 10" class="minilabel label label-warning" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@unknown*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@unknown*100,'#.00')}}
+                            </span>
+                              <span  tpl:else="" class="minilabel label label-success" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@unknown*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month1]/@unknown*100,'#.00')}}
+                            </span>
+                        </span>
+
+                        </td>
+                        <td tpl:else="">
+                            <span class="avCheck label label-default">N.A</span>
+                            <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
+
+                        </td>
+
+                        <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month2]">
+                            <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=DAILY&amp;report={{/e:entries/@report}}&amp;start_date={{/e:entries/@month2}}-01&amp;end_date={{/e:entries/@month3}}-01&amp;site={{@site}}">
                             <span class="avCheck label"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@availability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@availability,'#.00')}}</span>
                             <span class="reCheck label" style="margin-left:10px"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@reliability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@reliability,'#.00')}}</span>
-                        </a>
+                            </a>
 
                          <span  class="pull-right" style="font-size: small;" >
-                            <span  tpl:if="Availability[@timestamp=ancestor::e:entries/@month2]/@downtime&gt;10" class="minilabel label label-warning" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@downtime,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@downtime,'#.00')}}
+                            <span   tpl:if="format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@downtime*100,'#.00') &gt; 10" class="minilabel label label-warning" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@downtime,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@downtime*100,'#.00')}}
                             </span>
-                              <span  tpl:else="" class="minilabel label label-success" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@downtime,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@downtime,'#.00')}}
+                              <span  tpl:else="" class="minilabel label label-success" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@downtime*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@downtime*100,'#.00')}}
                             </span>
                            <br/>
-                             <span  tpl:if="Availability[@timestamp=ancestor::e:entries/@month2]/@unknown&gt;10" class="minilabel label label-warning" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@unknown,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@unknown,'#.00')}}
+                             <span tpl:if="format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@unknown*100,'#.00') &gt; 10" class="minilabel label label-warning" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@unknown*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@unknown*100,'#.00')}}
                             </span>
-                              <span  tpl:else="" class="minilabel label label-success" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@unknown,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@unknown,'#.00')}}
+                              <span  tpl:else="" class="minilabel label label-success" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@unknown*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month2]/@unknown*100,'#.00')}}
                             </span>
                         </span>
-                    </td>
-                    <td tpl:else="">
-                        <span class="avCheck label label-default">N.A</span>
-                        <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
+                        </td>
+                        <td tpl:else="">
+                            <span class="avCheck label label-default">N.A</span>
+                            <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
 
-                    </td>
+                        </td>
 
-                    <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month3]">
-                        <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=daily&amp;start_date={{/e:entries/@month3}}-01&amp;end_date={{/e:entries/@month4}}-01&amp;site={{@site}}">
+                        <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month3]">
+                            <a tpl:if="string-length(/e:entries/@month4)&gt;8" href="/lavoisier/{{/e:entries/@related_view}}?granularity=DAILY&amp;report={{/e:entries/@report}}&amp;start_date={{/e:entries/@month3}}-01&amp;end_date={{/e:entries/@month4}}&amp;site={{@site}}">
                             <span class="avCheck label"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@availability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@availability,'#.00')}}</span>
                             <span class="reCheck label" style="margin-left:10px"
                                   title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@reliability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@reliability,'#.00')}}</span>
-                        </a>
-                            <span  class="pull-right" style="font-size: small;" >
-                            <span  tpl:if="Availability[@timestamp=ancestor::e:entries/@month3]/@downtime&gt;10" class="minilabel label label-warning" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@downtime,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@downtime,'#.00')}}
-                            </span>
-                              <span  tpl:else="" class="minilabel label label-success" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@downtime,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@downtime,'#.00')}}
-                            </span>
-                           <br/>
-                             <span  tpl:if="Availability[@timestamp=ancestor::e:entries/@month3]/@unknown&gt;10" class="minilabel label label-warning" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@unknown,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@unknown,'#.00')}}
-                            </span>
-                              <span  tpl:else="" class="minilabel label label-success" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@unknown,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@unknown,'#.00')}}
-                            </span>
-                        </span>
-                           
-                    </td>
-                    <td tpl:else="">
-                        <span class="avCheck label label-default">N.A</span>
-                        <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
+                            </a>
 
-                    </td>
-
-                    <td tpl:if="Availability[@timestamp=ancestor::e:entries/@month4]">
-                        <a href="/lavoisier/{{/e:entries/@related_view}}?granularity=daily&amp;start_date={{/e:entries/@month4}}-01&amp;end_date={{/e:entries/@month4}}-31&amp;site={{@site}}">
+                            <a tpl:else="" href="/lavoisier/{{/e:entries/@related_view}}?granularity=DAILY&amp;report={{/e:entries/@report}}&amp;start_date={{/e:entries/@month3}}-01&amp;end_date={{concat(/e:entries/@month4,'-01')}}&amp;site={{@site}}">
                             <span class="avCheck label"
-                                  title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@availability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@availability,'#.00')}}</span>
+                                  title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@availability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@availability,'#.00')}}</span>
                             <span class="reCheck label" style="margin-left:10px"
-                                  title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@reliability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@reliability,'#.00')}}</span>
-                        </a>
+                                  title="{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@reliability,'#.00')}}">{{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@reliability,'#.00')}}</span>
+                            </a>
                             <span  class="pull-right" style="font-size: small;" >
-                            <span  tpl:if="Availability[@timestamp=ancestor::e:entries/@month4]/@downtime&gt;10" class="minilabel label label-warning" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@downtime,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@downtime,'#.00')}}
+                            <span   tpl:if="format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@downtime*100,'#.00') &gt; 10" class="minilabel label label-warning" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@downtime*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@downtime*100,'#.00')}}
                             </span>
-                              <span  tpl:else="" class="minilabel label label-success" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@downtime,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@downtime,'#.00')}}
+                              <span  tpl:else="" class="minilabel label label-success" title="Downtime : {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@downtime*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@downtime*100,'#.00')}}
                             </span>
                            <br/>
-                             <span  tpl:if="Availability[@timestamp=ancestor::e:entries/@month4]/@unknown&gt;10" class="minilabel label label-warning" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@unknown,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@unknown,'#.00')}}
+                             <span  tpl:if="format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@unknown*100,'#.00') &gt; 10" class="minilabel label label-warning" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@unknown*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@unknown*100,'#.00')}}
                             </span>
-                              <span  tpl:else="" class="minilabel label label-success" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@unknown,'#.00')}} % ">
-                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month4]/@unknown,'#.00')}}
+                              <span  tpl:else="" class="minilabel label label-success" title="unknown : {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@unknown*100,'#.00')}} % ">
+                                {{format-number(Availability[@timestamp=ancestor::e:entries/@month3]/@unknown*100,'#.00')}}
                             </span>
                         </span>
-                           
-                    </td>
-                    <td tpl:else="">
-                        <span class="avCheck label label-default">N.A</span>
-                        <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
 
-                    </td>
+                        </td>
+                        <td tpl:else="">
+                            <span class="avCheck label label-default">N.A</span>
+                            <span style="margin-left:10px" class="reCheck label label-default">N.A</span>
 
-
-                </tr>
-                </tbody>
+                        </td>
 
 
-            </table>
+                    </tr>
+                    </tbody>
+
+
+                </table>
+            </div>
+
+
         </div>
 
 
     </div>
 
 
-</div>
-
-
-
 </section>
-<!-- /.content -->
 
 </div>
 
