@@ -132,6 +132,13 @@
 
             </element>
 
+            <elements path="root/group">
+                <element-ignore in="status" if="preceding-sibling::status and date:seconds(@timestamp) &lt; date:seconds($start_date)"></element-ignore>
+                <element in="status" if="not(preceding-sibling::status)" >
+                    <attribute in="timestamp">$start_date</attribute>
+                </element>
+            </elements>
+
         </processors>
 
 
