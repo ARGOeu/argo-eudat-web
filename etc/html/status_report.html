@@ -171,6 +171,7 @@
             var newgroup = [];
             var colorsgroup = [];
             var links = [];
+            var excludedIndexes =[];
 
 
             var local_groups = document.getElementById('local_groups').getElementsByTagName('div');
@@ -191,18 +192,25 @@
                 '<label>Start Time : &nbsp;</label>' + tempArray[2] + '<hr/>' +
                 '<label>End Time : &nbsp;</label>' + tempArray[3] + '</div><div class="panel-footer"><em>Click on the bar to access the next granularity level</em></div></div>';
 
-                tempArray[2] = new Date(tempArray[2]);
-                tempArray[3] = new Date(tempArray[3]);
+                tempArray[2] = new Date(tempArray[2].substr(0,19));
+                tempArray[3] = new Date(tempArray[3].substr(0,19));
 
 
-                newgroup.push(tempArray);
-                colorsgroup.push(color);
+                if (tempArray[2] < tempArray[3]) {
+                    newgroup.push(tempArray);
+                    colorsgroup.push(color);
+                }
+                else
+                {
+                    excludedIndexes.push(j);
+                }
 
             }
 
 
             for (m = 0; m < local_links.length; m++) {
-                links.push(local_links[m].textContent);
+                if (excludedIndexes.indexOf(m) == -1)
+                    links.push(local_links[m].textContent);
             }
 
             google.setOnLoadCallback(drawChart);
